@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "",
-    "dev": ""
+    "dev": "",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,12 @@
   "bugs": {
     "url": "https://github.com/RaphaelOliveiraMoura/base-project-server-side/issues"
   },
-  "homepage": "https://github.com/RaphaelOliveiraMoura/base-project-server-side#readme"
+  "homepage": "https://github.com/RaphaelOliveiraMoura/base-project-server-side#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.13",
+    "babel-jest": "^24.8.0"
+  }
 }
