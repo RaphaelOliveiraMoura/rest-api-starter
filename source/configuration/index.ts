@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 type ConfigurationInterface = {
     'enviroment': string,
     'host': string,
@@ -11,7 +13,7 @@ class Configuration{
         this.configurantions = {
             'enviroment': process.env.ENV || 'development',
             'host': process.env.HOST || 'localhost',
-            'port': process.env.HOST || 3003
+            'port': process.env.PORT || 3003
         }
     }
 }

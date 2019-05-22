@@ -1,19 +1,22 @@
 import express from "express";
 
-class Application{
+class Application {
 
     public app: express.Application;
 
-    constructor(){
+    constructor() {
         this.app = express();
+
+        this.middlewares();
+        this.routes();
     }
 
-    private configuration(): void{
-
+    private middlewares(): void {
+        this.app.use(express.json());
     }
 
-    private middlewares(): void{
-
+    private routes(): void {
+        
     }
 
 }
