@@ -1,0 +1,27 @@
+{
+  "name": "base-project-server-side",
+  "version": "1.0.0",
+  "description": "a base but complete struct to start a server side project with support to many functionalities",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "",
+    "dev": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaphaelOliveiraMoura/base-project-server-side.git"
+  },
+  "keywords": [
+    "typescript",
+    "base-project",
+    "documentation",
+    "tests"
+  ],
+  "author": "Raphael Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaphaelOliveiraMoura/base-project-server-side/issues"
+  },
+  "homepage": "https://github.com/RaphaelOliveiraMoura/base-project-server-side#readme"
+}
