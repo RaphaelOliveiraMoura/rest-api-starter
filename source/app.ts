@@ -1,4 +1,5 @@
 import express from "express";
+import UserController from "./controllers/UserController";
 
 class Application {
 
@@ -16,7 +17,7 @@ class Application {
     }
 
     private routes(): void {
-        
+        this.app.get('/users', UserController.list);
     }
 
 }

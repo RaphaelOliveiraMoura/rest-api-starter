@@ -4,13 +4,13 @@
   "description": "a base but complete structure to start a server side project with support to many functionalities",
   "main": "build/index.js",
   "scripts": {
-    "start:test": "tsc && npm test && echo Application starting... && echo && node build/index.js",
-    "start:build": "tsc && node build/index.js",
-    "start:dev": "tsc && nodemon build/index.js",
-    "start": "node build/index.js",
+    "start:test": "tsc && npm test && echo Application starting... && echo && node .",
+    "start:build": "tsc && node .",
+    "start:dev": "tsc && nodemon .",
+    "start": "node .",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,11 @@
     "@types/express": "^4.16.1",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
+    "@types/supertest": "^2.0.7",
     "babel-jest": "^24.8.0",
     "dotenv": "^8.0.0",
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "express": "^4.17.0"
