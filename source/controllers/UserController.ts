@@ -14,10 +14,10 @@ class UserController{
     public create(request: Request, response: Response): void{
 
         if(!request.body.name || !request.body.email) {
-            response.status(400).send({ errors: 'missing arguments' });
+            response.status(400).json({ errors: 'missing arguments' });
         }
         
-        response.status(200).send({message: 'user created'});
+        response.status(200).json({message: 'user created'});
     }
 }
 
