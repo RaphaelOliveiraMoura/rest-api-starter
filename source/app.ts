@@ -1,7 +1,7 @@
 import express from "express";
-import UserController from "./controllers/UserController";
+import routes from './routes';
 
-class Application {
+class ApplicationController {
 
     public app: express.Application;
 
@@ -17,9 +17,9 @@ class Application {
     }
 
     private routes(): void {
-        this.app.get('/users', UserController.list);
+        this.app.use(routes);
     }
 
 }
 
-export default new Application().app;
+export default new ApplicationController().app;
