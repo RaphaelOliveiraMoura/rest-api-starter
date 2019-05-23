@@ -6,6 +6,7 @@ class RoutesController{
 
     constructor(){
         this.routes.get('/users', UserController.list);
+        this.routes.post('/users', UserController.create);
     }
 }
 

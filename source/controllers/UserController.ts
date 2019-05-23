@@ -2,12 +2,22 @@ import { Request, Response } from "express";
 
 class UserController{
     public list(request: Request, response: Response): void{
+
         response.status(200);
-        response.send({
+        response.json([{
             id: 0,
             name: 'Raphael',
             email: 'raphaeldeoliveiramoura@gmail.com'
-        });
+        }]);
+    }
+
+    public create(request: Request, response: Response): void{
+
+        if(!request.body.name || !request.body.email) {
+            response.status(400).send({ errors: 'missing arguments' });
+        }
+        
+        response.status(200).send({message: 'user created'});
     }
 }
 
