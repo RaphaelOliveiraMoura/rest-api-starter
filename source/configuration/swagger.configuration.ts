@@ -1,4 +1,4 @@
-import configurations from './index'
+import configurations from './application.configuration'
 
 type SwaggerConfigurationOptionsInterface = {
     swaggerDefinition: {

@@ -1,14 +1,6 @@
 import request from "../../source/wrappers/supertestsWrapper";
 import server from "../../source/app";
 
-beforeAll(() => {
-    console.log('Tests for users initializing ...');
-})
-
-afterAll(() => {
-    console.log('Users tests finished ...');
-})
-
 describe('list users - GET /users', () => {
     it('should return a list of users and 200 status', async () => {
         
