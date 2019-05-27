@@ -1,4 +1,6 @@
 
+import configuration from './application.configuration';
+
 type TestsConfigurationInterface = {
     endpoint: string
 }
@@ -8,7 +10,7 @@ class TestsConfiguration{
 
     constructor(){
         this.configurations = {
-            'endpoint': '/api/v1'
+            'endpoint': configuration.endpoint
         }
     }
 }

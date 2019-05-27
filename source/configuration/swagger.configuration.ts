@@ -1,4 +1,4 @@
-import configurations from './application.configuration'
+import configuration from './application.configuration';
 
 type SwaggerConfigurationOptionsInterface = {
     swaggerDefinition: {
@@ -23,6 +23,9 @@ class SwaggerConfiguration {
     public options: SwaggerConfigurationOptionsInterface;
 
     constructor() {
+
+        const host = process.env.ENV === 'development' ? `${configuration.host}:${configuration.port}` : configuration.host;
+
         this.options = {
             swaggerDefinition: {
                 info: {
@@ -30,8 +33,8 @@ class SwaggerConfiguration {
                     title: 'Swagger',
                     version: '1.0.0',
                 },
-                host: 'localhost:3000',
-                basePath: '/api/v1',
+                host: host,
+                basePath: configuration.endpoint,
                 produces: [
                     "application/json"
                 ],
