@@ -1,5 +1,5 @@
 import express from "express";
-import routes from './routes';
+import routes from './routes/routes';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
 
 class ApplicationController {

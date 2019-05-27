@@ -31,8 +31,8 @@ class UserController {
      * @param {UserCreationModel.model} user.body.required - user
      * @consumes application/json
      * @produces application/json
-     * @returns {object} 200 - return the id of created user
-     * @returns {Error}  default - failed in request
+     * @returns {object} 200 - Id of created user
+     * @returns {Error}  default - Unexpected error
      */
     public create(request: Request, response: Response): Response {
 
