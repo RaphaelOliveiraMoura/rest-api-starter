@@ -1,10 +1,10 @@
 import { Router } from "express";
 import UserController from "../controllers/User.controller";
 
-class UserRoutes{
+class UserRoutes {
     public routes: Router = Router();
 
-    constructor(){   
+    constructor() {
         this.routes.get('/', UserController.list);
         this.routes.post('/', UserController.create);
     }

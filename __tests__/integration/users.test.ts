@@ -11,8 +11,8 @@ describe('list users - GET /users', () => {
     });
 });
 
-describe('create list - POST /users', () => {
-    it('should response a sucess message and status 200 without erros when pass the correct args', async () => {
+describe('create - POST /users', () => {
+    it('should response a sucess message and status 200 without errors when pass the correct args', async () => {
 
         const response = await request(server)
             .post('/users', { name: 'john', email: 'john@gmail.com' });

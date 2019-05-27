@@ -1,5 +1,6 @@
 import express from "express";
 import routes from './routes/routes';
+import applicationConfiguration from './configuration/application.configuration';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
 
 class ApplicationController {
@@ -23,7 +24,7 @@ class ApplicationController {
     }
 
     private routes(): void {
-        this.app.use('/api/v1', routes);
+        this.app.use(applicationConfiguration.endpoint, routes);
     }
 
 }
