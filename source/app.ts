@@ -1,7 +1,7 @@
 import express from "express";
 import routes from './routes';
-import swaggerUi from 'swagger-ui-express';
-import swaggerConfigurationOptions from './configuration/swagger.configuration'
+import swaggerConfigurationOptions from './configuration/swagger.configuration';
+
 class ApplicationController {
 
     public app: express.Application;
@@ -14,17 +14,8 @@ class ApplicationController {
     }
 
     private apiDocumentation() {
-
-        const swaggerJSDoc = require('swagger-jsdoc'); 
-
-        const oasDefinition = swaggerJSDoc(swaggerConfigurationOptions);  
-        const swaggerOptions = {  
-          customSiteTitle: 'My Service',  
-          customCss: '.topbar { display: none }',  
-        };  
-
-        this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(oasDefinition, swaggerOptions));  
-
+        const expressSwagger = require('express-comments-swagger')(this.app);
+        expressSwagger(swaggerConfigurationOptions);
     }
 
     private middlewares(): void {

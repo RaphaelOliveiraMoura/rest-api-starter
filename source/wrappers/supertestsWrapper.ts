@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import { Application } from 'express';
-import configuration from '../../__tests__/integration/configuration';
+import configuration from '../configuration/jest.configuration';
 
 class SuperTestWrapper {
 
@@ -10,14 +10,14 @@ class SuperTestWrapper {
         this.server = server;
     }
 
-    async get(route: string) {
-        return await supertest(this.server)
+    async get(route: string): Promise<any> {
+        return supertest(this.server)
             .get(`${configuration.endpoint}${route}`)
             .set('Accept', 'application/json');
     }
 
-    async post(route: string, body: {}) {
-        return await supertest(this.server)
+    async post(route: string, body: {}): Promise<any> {
+        return supertest(this.server)
             .post(`${configuration.endpoint}${route}`)
             .send(body)
             .set('Accept', 'application/json');

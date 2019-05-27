@@ -10,9 +10,12 @@ type SwaggerConfigurationOptionsInterface = {
         host: string,
         basePath: string,
         produces: string[],
-        schemes: string[]
+        schemes: string[],
+        securityDefinitions: {}
     },
-    apis: string[]
+    docUrl: string
+    basedir: string,
+    files: string[]
 }
 
 class SwaggerConfiguration {
@@ -23,19 +26,28 @@ class SwaggerConfiguration {
         this.options = {
             swaggerDefinition: {
                 info: {
-                    description: 'description of API',
+                    description: 'This is a sample server',
+                    title: 'Swagger',
                     version: '1.0.0',
-                    title: 'API Base Structure',
                 },
-                host: `${configurations.host}:${configurations.port}`,
+                host: 'localhost:3000',
                 basePath: '/api/v1',
-                produces: ['application/json'],
-                schemes: [
-                    'http',
-                    'https'
+                produces: [
+                    "application/json"
                 ],
+                schemes: ['http', 'https'],
+                securityDefinitions: {
+                    JWT: {
+                        type: 'apiKey',
+                        in: 'header',
+                        name: 'Authorization',
+                        description: "",
+                    }
+                }
             },
-            apis: ['./**/controllers/*.controller.js'],
+            docUrl: '/api-docs',
+            basedir: './',
+            files: ['./**/controllers/*.controller.js']
         };
     }
 
