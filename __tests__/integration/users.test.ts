@@ -3,6 +3,10 @@ import server from "../../source/app";
 import sequelize  from '../configurations/sequelize.configuration';
 
 beforeAll(async ()=>{
+    /**
+     * Start the connection with database
+     * (@force: true) to drop the tables every time when the app start
+     */
     await sequelize.sync({force: true});
 })
 
