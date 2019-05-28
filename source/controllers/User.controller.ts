@@ -3,7 +3,6 @@ import User from '../models/UserRepository.model';
 
 class UserController {
 
-
     /**
      * @route GET /users
      * @group Users
@@ -24,7 +23,8 @@ class UserController {
     /**
      * @typedef UserCreationModel
      * @property {string} name.required
-     * @property {string} email.required - This is a model that represent information about the creation of users
+     * @property {string} email.required
+     * @property {string} password.required - This is a model that represent information about the creation of users
      */
 
     /**
