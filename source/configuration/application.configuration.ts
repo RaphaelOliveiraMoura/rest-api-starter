@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 type ConfigurationInterface = {
-    'enviroment': string,
+    'environment': string,
     'host': string,
     'port': string|number,
     'endpoint': string
@@ -12,7 +12,7 @@ class Configuration{
 
     constructor(){
         this.configurantions = {
-            'enviroment': process.env.ENV || 'development',
+            'environment': process.env.ENV || 'development',
             'host': process.env.HOST || 'localhost',
             'port': process.env.PORT || 3003,
             'endpoint': process.env.ENDPOINT || '/api/v1'
