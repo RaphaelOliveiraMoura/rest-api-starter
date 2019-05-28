@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import User from '../models/UserRepository.model';
 
 class UserController {
 
@@ -9,14 +10,15 @@ class UserController {
      * @returns {object} 200 - An array of user info
      * @returns {Error}  default - Unexpected error
      */
-    public list(request: Request, response: Response): void {
-
-        response.status(200);
-        response.json([{
-            id: 0,
-            name: 'Raphael',
-            email: 'raphaeldeoliveiramoura@gmail.com'
-        }]);
+    public async list(request: Request, response: Response): Promise<any> {
+        try {
+            const users = await User.findAll();
+            response.status(200);
+            return response.json(users);
+        } catch (error) {
+            response.status(500);
+            return response.json({ error: 'Internal Server Error' });
+        }
     }
 
     /**
@@ -34,13 +36,24 @@ class UserController {
      * @returns {object} 200 - Id of created user
      * @returns {Error}  default - Unexpected error
      */
-    public create(request: Request, response: Response): Response {
+    public async create(request: Request, response: Response): Promise<any> {
 
-        if (!request.body.name || !request.body.email) {
+        if (!request.body.name || !request.body.email || !request.body.password) {
             return response.status(400).json({ errors: 'missing arguments' });
-        }   
+        }
 
-        return response.status(200).json({ message: 'user created' });
+        try {
+            const user = await User.create({
+                name: request.body.name,
+                email: request.body.email,
+                password: request.body.password,
+            });
+            response.status(200);
+            return response.json(user);
+        } catch (error) {
+            response.status(500);
+            return response.json({ error: 'Internal Server Error' });
+        }
     }
 }
 

@@ -1,10 +1,10 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 
-const modelsPath = __dirname.split('/configuration')[0] + '/models/**/*.model.js';
+const modelsPath = __dirname.split('/__tests__')[0] + '/source/models/**/*.model.js';
 
-const sequelize: Sequelize = new Sequelize({
-    database: 'dev_db',
+const sequelize: any = new Sequelize({
+    database: 'test_db',
     dialect: 'mysql',
     username: 'root',
     operatorsAliases: Op,

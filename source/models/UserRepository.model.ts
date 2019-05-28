@@ -10,9 +10,10 @@ import {
 } from 'sequelize-typescript';
 
 @Table({
-    timestamps: true
+    timestamps: true,
+    tableName: 'users'
 })
-export default class User extends Model<User> {
+export default class UserRepository extends Model<UserRepository> {
 
     @PrimaryKey
     @AutoIncrement
