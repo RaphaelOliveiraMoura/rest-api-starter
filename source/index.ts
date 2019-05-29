@@ -1,13 +1,15 @@
-import application from './app';
+import { application } from './app';
 import configuration from './configuration/application.configuration';
-import sequelize from './configuration/sequelize.configuration';
+import sequelizeConfiguration from './configuration/sequelize.configuration';
 
-(async () => {
+startServer();
 
-    await sequelize.sync();
+async function startServer() {
+
+    await application.syncDatabase(sequelizeConfiguration);
 
     application.listen(configuration.port, () => {
         console.log(`Server listening on ${configuration.host}:${configuration.port} ...`);
     });
 
-})()
+}

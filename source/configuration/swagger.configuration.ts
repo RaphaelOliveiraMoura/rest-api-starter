@@ -48,7 +48,7 @@ class SwaggerConfiguration {
                     }
                 }
             },
-            docUrl: '/api-docs',
+            docUrl: `${configuration.endpoint}/api-docs`,
             basedir: './',
             files: ['./**/controllers/*.controller.js']
         };

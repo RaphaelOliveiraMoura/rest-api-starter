@@ -2,31 +2,40 @@ import express from "express";
 import routes from './routes/routes';
 import applicationConfiguration from './configuration/application.configuration';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
+import { Database, ISequelizeConfigParams } from './database/Database';
+export class ApplicationController {
 
-class ApplicationController {
-
-    public app: express.Application;
+    public express: express.Application;
 
     constructor() {
-        this.app = express();
+        this.express = express();
         this.middlewares();
         this.routes();
         this.apiDocumentation();
     }
 
-    private apiDocumentation() {
-        const expressSwagger = require('express-comments-swagger')(this.app);
+    public async syncDatabase(sequelizeConfiguration: ISequelizeConfigParams) {
+        const database = new Database(sequelizeConfiguration);
+        await database.start();
+    }
+
+    public listen(port: string | number, callback: () => void): void {
+        this.express.listen(port, callback);
+    }
+
+    private apiDocumentation(): void {
+        const expressSwagger = require('express-comments-swagger')(this.express);
         expressSwagger(swaggerConfigurationOptions);
     }
 
     private middlewares(): void {
-        this.app.use(express.json());
+        this.express.use(express.json());
     }
 
     private routes(): void {
-        this.app.use(applicationConfiguration.endpoint, routes);
+        this.express.use(applicationConfiguration.endpoint, routes);
     }
 
 }
 
-export default new ApplicationController().app;
+export const application = new ApplicationController();

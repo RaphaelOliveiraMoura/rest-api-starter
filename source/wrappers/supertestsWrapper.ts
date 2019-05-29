@@ -1,23 +1,21 @@
 import supertest from "supertest";
-import { Application } from 'express';
-import configuration from '../configuration/jest.configuration';
+import { ApplicationController } from '../app';
+import configuration from '../configuration/application.configuration';
 
 class SuperTestWrapper {
 
-    private server: Application;
-
-    constructor(server: Application) {
+    constructor(private server: ApplicationController) {
         this.server = server;
     }
 
     async get(route: string): Promise<any> {
-        return supertest(this.server)
+        return supertest(this.server.express)
             .get(`${configuration.endpoint}${route}`)
             .set('Accept', 'application/json');
     }
 
     async post(route: string, body: {}): Promise<any> {
-        return supertest(this.server)
+        return supertest(this.server.express)
             .post(`${configuration.endpoint}${route}`)
             .send(body)
             .set('Accept', 'application/json');
@@ -25,4 +23,4 @@ class SuperTestWrapper {
 
 }
 
-export default (server: Application) => new SuperTestWrapper(server);
+export default (server: ApplicationController) => new SuperTestWrapper(server);

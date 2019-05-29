@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from '../models/UserRepository.model';
+import UserRepository from '../models/UserRepository.model';
 
 class UserController {
 
@@ -11,7 +11,7 @@ class UserController {
      */
     public async list(request: Request, response: Response): Promise<any> {
         try {
-            const users = await User.findAll();
+            const users = await UserRepository.findAll();
             response.status(200);
             return response.json(users);
         } catch (error) {
@@ -43,7 +43,7 @@ class UserController {
         }
 
         try {
-            const user = await User.create({
+            const user = await UserRepository.create({
                 name: request.body.name,
                 email: request.body.email,
                 password: request.body.password,
