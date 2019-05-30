@@ -1,63 +1,57 @@
 import request from "supertest";
 import { application } from "../../source/app";
 import databaseConfiguration from '../configurations/sequelize.configuration';
+import { User } from '../../source/models/User.interface';
+
+const user: User = {
+    name: 'john',
+    email: 'john@gmail.com',
+    password: '123456'
+}
 
 beforeAll(async () => {
     await application.syncDatabase(databaseConfiguration);
 })
 
-describe('list users - GET /users', () => {
-    it('should return a list of users and 200 status', async () => {
-        const response = await request(application.express)
-            .get('/api/v1/users')
-            .set({
-                'Accept': 'application/json',
-                'Authorization': 'token'
-            })
+it('should return a list of users and 200 status', async () => {
+    const response = await request(application.express)
+        .get('/api/v1/users')
+        .set({
+            'Accept': 'application/json',
+            'Authorization': '123'
+        })
 
-        expect(response.status).toEqual(200);
-        expect(response.text).toContain([]);
-    });
+    expect(response.status).toEqual(200);
+    expect(response.text).toContain([]);
 });
 
-describe('create user - POST /users', () => {
-    it('should response a sucess message and status 200 without errors when pass the correct args', async () => {
+it('should response a success message and status 200 without errors when pass the correct args', async () => {
+    const response = await request(application.express)
+        .post('/api/v1/users')
+        .set({
+            'Accept': 'application/json'
+        })
+        .send(user);
 
-        const user = {
-            name: 'john',
-            email: 'john@gmail.com',
-            password: '123456'
-        }
+    expect(response.status).toEqual(200);
 
-        const response = await request(application.express)
-            .post('/api/v1/users')
-            .set({
-                'Accept': 'application/json',
-                'Authorization': 'token'
-            })
-            .send(user);
+});
 
-        expect(response.status).toEqual(200);
+it('should response a error message with status 400 when not pass the corrects args', async () => {
 
-    });
+    const wrongUser = {
+        name: 'john',
+        email: 'john@gmail.com'
+    }
 
-    it('should response a error message with status 400 when not pass the corrects args', async () => {
+    const response = await request(application.express)
+        .post('/api/v1/users')
+        .set({
+            'Accept': 'application/json'
+        })
+        .send(wrongUser);
 
-        const user = {
-            name: 'john',
-            email: 'john@gmail.com'
-        }
+    expect(response.status).toEqual(400);
+    expect(response.text).toContain('error');
 
-        const response = await request(application.express)
-            .post('/api/v1/users')
-            .set({
-                'Accept': 'application/json',
-                'Authorization': 'token'
-            })
-            .send(user);
-
-        expect(response.status).toEqual(400);
-        expect(response.text).toContain('error');
-
-    });
 });

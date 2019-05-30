@@ -9,15 +9,14 @@ class UserController {
      * @group Users
      * @returns {object} 200 - An array of user info
      * @returns {Error}  500 - Unexpected error
+     * @security JWT
      */
     public async list(request: Request, response: Response): Promise<any> {
         try {
             const users = await UserRepository.findAll();
-            response.status(200);
-            return response.json(users);
+            return response.status(200).json(users);
         } catch (error) {
-            response.status(500);
-            return response.json({ error: 'Internal Server Error' });
+            return response.status(500).json({ error: 'Internal Server Error' });
         }
     }
 
@@ -42,11 +41,9 @@ class UserController {
         const { name, email, password } = request.body;
 
         try {
-
             validator(name, 'name', { minSize: 2, maxSize: 25, hasNumbers: false }).validate();
             validator(email, 'email', { minSize: 10, maxSize: 100 }).validate();
             validator(password, 'password', { minSize: 6, maxSize: 25 }).validate();
-
         } catch (error) {
             return response.status(400).json({ error: error });
         }
@@ -57,11 +54,9 @@ class UserController {
                 email: request.body.email,
                 password: request.body.password,
             });
-            response.status(200);
-            return response.json(user);
+            return response.status(200).json(user);
         } catch (error) {
-            response.status(500);
-            return response.json({ error: 'Internal Server Error' });
+            return response.status(500).json({ error: 'Internal Server Error' });
         }
     }
 }

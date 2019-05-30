@@ -9,7 +9,7 @@ export default{
     username: process.env.TEST_DATABASE_USERNAME || 'root',
     password: process.env.TEST_DATABASE_PASSWORD || 'root',
     operatorsAliases: Op,
-    logging: true,
+    logging: false,
     storage: __dirname + '/database/mysql',
     modelPaths: [modelsPath],
     forceReset: true

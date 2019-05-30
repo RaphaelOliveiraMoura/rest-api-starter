@@ -10,7 +10,7 @@
     "start": "node .",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "tsc && jest"
+    "test": "tsc && jest --runInBand --detectOpenHandles"
   },
   "repository": {
     "type": "git",
