@@ -2,8 +2,6 @@ import request from "supertest";
 import { application } from "../../source/app";
 import databaseConfiguration from '../configurations/sequelize.configuration';
 
-
-
 beforeAll(async () => {
     await application.syncDatabase(databaseConfiguration);
 })
@@ -43,7 +41,7 @@ describe('create user - POST /users', () => {
 
     });
 
-    it('should response a error message with status 204 when not pass the corrects args', async () => {
+    it('should response a error message with status 400 when not pass the corrects args', async () => {
 
         const user = {
             name: 'john',
@@ -59,7 +57,7 @@ describe('create user - POST /users', () => {
             .send(user);
 
         expect(response.status).toEqual(400);
-        expect(response.text).toContain('errors');
+        expect(response.text).toContain('error');
 
     });
 });

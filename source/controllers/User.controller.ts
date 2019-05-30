@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserRepository from '../models/UserRepository.model';
+import { validator } from '../utils/Validator'
 
 class UserController {
 
@@ -7,7 +8,7 @@ class UserController {
      * @route GET /users
      * @group Users
      * @returns {object} 200 - An array of user info
-     * @returns {Error}  default - Unexpected error
+     * @returns {Error}  500 - Unexpected error
      */
     public async list(request: Request, response: Response): Promise<any> {
         try {
@@ -34,12 +35,20 @@ class UserController {
      * @consumes application/json
      * @produces application/json
      * @returns {object} 200 - Id of created user
-     * @returns {Error}  default - Unexpected error
+     * @returns {Error}  500 - Unexpected error
      */
     public async create(request: Request, response: Response): Promise<any> {
 
-        if (!request.body.name || !request.body.email || !request.body.password) {
-            return response.status(400).json({ errors: 'missing arguments' });
+        const { name, email, password } = request.body;
+
+        try {
+
+            validator(name, 'name', { minSize: 2, maxSize: 25, hasNumbers: false }).validate();
+            validator(email, 'email', { minSize: 10, maxSize: 100 }).validate();
+            validator(password, 'password', { minSize: 6, maxSize: 25 }).validate();
+
+        } catch (error) {
+            return response.status(400).json({ error: error });
         }
 
         try {
