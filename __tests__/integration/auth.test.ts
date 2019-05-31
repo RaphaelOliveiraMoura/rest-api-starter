@@ -41,7 +41,7 @@ it('should authenticate a user with the corrects args', async () => {
     expect(response.status).toEqual(200);
 });
 
-it('should return a error when the user pass a wrong password', async () => {
+it('should return a error when the user pass a wrong password or email', async () => {
 
     const wrongUser = {
         email: 'wrong@gmal.com',

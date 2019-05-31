@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import UserRepository from '../models/UserRepository.model';
+import { sign } from 'jsonwebtoken';
+const protectKey = require('../../../credentials.json').protectKey;
 
 class AuthController {
 
@@ -34,9 +36,13 @@ class AuthController {
                     password: request.body.password
                 }
             });
-            if(!user) return response.status(401).json({ error: 'user not found' });
+            if (!user) return response.status(401).json({ error: 'user not found' });
 
-            return response.status(200).json({ token: '123' });
+            const jwtToken = sign({
+                data: user.id
+            }, protectKey, { expiresIn: 60 * 60 });
+
+            return response.status(200).json({ token: jwtToken });
         } catch (error) {
             response.status(401);
             return response.json({ error: 'Internal Server Error' });

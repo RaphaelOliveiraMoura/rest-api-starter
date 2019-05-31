@@ -1,15 +1,20 @@
 import { Request, Response, NextFunction } from 'express'
+import { verify } from 'jsonwebtoken';
+const protectKey = require('../../../credentials.json').protectKey;
 
 export default (request: Request, response: Response, next: NextFunction) => {
 
-    const jwtToken = request.headers['authorization'];
+    const userJwtToken = request.headers['authorization'];
 
-    if(!jwtToken)
-        return response.status(401).json({error: 'Should provide the JWT token'});
+    if (!userJwtToken)
+        return response.status(401).json({ error: 'Should provide the JWT token' });
 
-    if(jwtToken === '123')
-        return next();
+    try {
+        if (verify(userJwtToken, protectKey)) return next();
+    } catch (error) {
+        return response.status(401).json({ error: 'JWT malformed' });
+    }
 
-    return response.status(401).json({error: 'Error with JWT authentication'});
+    return response.status(401).json({ error: 'Error with JWT authentication' });
 
 }
