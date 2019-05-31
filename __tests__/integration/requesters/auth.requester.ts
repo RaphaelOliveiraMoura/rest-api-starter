@@ -1,9 +1,8 @@
-
 import request from "supertest";
 import { Application } from 'express';
-import { User } from '../../source/models/User.interface';
+import { User } from '../../../source/models/UserInterface';
 
-class AuthUtils {
+export default class AuthRequest {
     
     private express: Application;
 
@@ -17,8 +16,9 @@ class AuthUtils {
         .set({
             'Accept': 'application/json'
         })
-        .send(user);
+        .send({
+            'email': user.email,
+            'password': user.password
+        });
     }
 }
-
-export default (express: Application) => new AuthUtils(express);

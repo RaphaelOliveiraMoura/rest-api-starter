@@ -17,34 +17,31 @@ class AuthController {
      * @param {UserAuthenticationModel.model} user.body.required - user
      * @consumes application/json
      * @produces application/json
-     * @returns {object} 200 - User information and JWT token 
-     * @returns {Error}  400 - Invalid credentials error
-     * @returns {Error}  500 - Unexpected error
+     * @returns {object} 200 - JWT Token
+     * @returns {Error}  401 - Invalid credentials
+     * @returns {Error}  500 - Internal Server Error
      */
     public async authenticate(request: Request, response: Response): Promise<any> {
-
         try {
 
-        } catch (error) {
-            return response.status(400).json({ error: error });
-        }
-
-        try {
             const user = await UserRepository.findOne({
                 where: {
                     email: request.body.email,
                     password: request.body.password
                 }
             });
-            if (!user) return response.status(401).json({ error: 'user not found' });
+
+            if (!user)
+                return response.status(401).json({ error: 'User not found' });
 
             const jwtToken = sign({
                 data: user.id
             }, protectKey, { expiresIn: 60 * 60 });
 
             return response.status(200).json({ token: jwtToken });
+
         } catch (error) {
-            response.status(401);
+            response.status(500);
             return response.json({ error: 'Internal Server Error' });
         }
     }

@@ -12,9 +12,7 @@ export default (request: Request, response: Response, next: NextFunction) => {
     try {
         if (verify(userJwtToken, protectKey)) return next();
     } catch (error) {
-        return response.status(401).json({ error: 'JWT malformed' });
+        return response.status(401).json({ error: 'Error with JWT authentication' });
     }
-
-    return response.status(401).json({ error: 'Error with JWT authentication' });
 
 }

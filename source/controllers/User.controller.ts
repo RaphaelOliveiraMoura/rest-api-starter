@@ -54,7 +54,9 @@ class UserController {
                 email: request.body.email,
                 password: request.body.password,
             });
-            return response.status(200).json(user);
+            const responseUser:any = user;
+            responseUser.password = undefined;            
+            return response.status(200).json(responseUser);
         } catch (error) {
             return response.status(500).json({ error: 'Internal Server Error' });
         }

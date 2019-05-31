@@ -1,8 +1,15 @@
-import request from "supertest";
 import { application } from "../../source/app";
 import databaseConfiguration from '../configurations/sequelize.configuration';
-import authUtil from '../utils/auth.util';
-import { User } from '../../source/models/User.interface';
+
+// Request Utils
+import AuthRequester from './requesters/auth.requester';
+import UserRequester from './requesters/user.requester';
+
+// Interfaces
+import { User } from '../../source/models/UserInterface';
+
+const authRequester = new AuthRequester(application.express);
+const userRequester = new UserRequester(application.express);
 
 const user: User = {
     name: 'john',
@@ -15,15 +22,13 @@ beforeAll(async () => {
 })
 
 it('should response a success message and status 200 without errors when pass the correct args', async () => {
-    const response = await request(application.express)
-        .post('/api/v1/users')
-        .set({
-            'Accept': 'application/json'
-        })
-        .send(user);
-
+    const response = await userRequester.create(user);
     expect(response.status).toEqual(200);
-
+    expect(response.body).not.toHaveProperty('error');
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('email');
+    expect(response.body).toHaveProperty('name');
+    expect(response.body).not.toHaveProperty('password');
 });
 
 it('should response a error message with status 400 when not pass the corrects args', async () => {
@@ -33,32 +38,19 @@ it('should response a error message with status 400 when not pass the corrects a
         email: 'john@gmail.com'
     }
 
-    const response = await request(application.express)
-        .post('/api/v1/users')
-        .set({
-            'Accept': 'application/json'
-        })
-        .send(wrongUser);
-
+    const response = await userRequester.create(wrongUser);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('error');
-
+    expect(response.body).toHaveProperty('error');
 });
 
 it('should return a list of users and 200 status', async () => {
 
-    const { body } = await authUtil(application.express).authenticate({
+    const { body } = await authRequester.authenticate({
         'email': user.email,
         'password': user.password
     });
     
-    const response = await request(application.express)
-        .get('/api/v1/users')
-        .set({
-            'Accept': 'application/json',
-            'Authorization': body.token
-        })
-
+    const response = await userRequester.list(body.token);
     expect(response.status).toEqual(200);
     expect(response.text).toContain([]);
 });
