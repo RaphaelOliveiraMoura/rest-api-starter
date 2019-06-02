@@ -1,8 +1,9 @@
 import express from "express";
-import routes from './routes/routes';
+import routes from './routes';
 import applicationConfiguration from './configuration/application.configuration';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
 import { Database, ISequelizeConfigParams } from './database/Database';
+
 export class ApplicationController {
 
     public express: express.Application;

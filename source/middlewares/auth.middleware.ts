@@ -4,7 +4,7 @@ const protectKey = require('../../../credentials.json').protectKey;
 
 export default (request: Request, response: Response, next: NextFunction) => {
 
-    const userJwtToken = request.headers['authorization'];
+    const userJwtToken = request.headers['authorization' || 'Authorization'];
 
     if (!userJwtToken)
         return response.status(401).json({ error: 'Should provide the JWT token' });

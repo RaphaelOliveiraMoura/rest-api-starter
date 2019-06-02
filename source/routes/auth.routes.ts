@@ -1,12 +1,9 @@
 import { Router } from "express";
 import AuthController from "../controllers/Auth.controller";
 
-class AuthRoutes {
-    public routes: Router = Router();
+const publicRoutes: Router = Router();
+publicRoutes.post('/', AuthController.authenticate);
 
-    constructor() {
-        this.routes.post('/', AuthController.authenticate);
-    }
+export default (routes:Router) => {
+    routes.use('/authenticate', publicRoutes);
 }
-
-export default new AuthRoutes().routes;

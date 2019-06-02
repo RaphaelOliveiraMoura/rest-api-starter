@@ -1,26 +1,8 @@
 import configuration from './application.configuration';
 
-type SwaggerConfigurationOptionsInterface = {
-    swaggerDefinition: {
-        info: {
-            description: string,
-            version: string,
-            title: string
-        }
-        host: string,
-        basePath: string,
-        produces: string[],
-        schemes: string[],
-        securityDefinitions: {}
-    },
-    docUrl: string
-    basedir: string,
-    files: string[]
-}
-
 class SwaggerConfiguration {
 
-    public options: SwaggerConfigurationOptionsInterface;
+    public options: {};
 
     constructor() {
 

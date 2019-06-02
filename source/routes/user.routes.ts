@@ -1,23 +1,13 @@
-import { Router, Request, Response, NextFunction } from "express";
-import authMiddleware from '../middlewares/auth.middleware'
+import { Router } from "express";
 import UserController from "../controllers/User.controller";
+import authMiddleware from "../middlewares/auth.middleware";
 
-class UserRoutes {
-    public routes: Router = Router();
+const publicRoutes: Router = Router();
+const privateRoutes: Router = Router().use(authMiddleware);
 
-    constructor() {
-        this.publicRoutes();
-        this.privateRoutes();
-    }
+publicRoutes.post('/', UserController.create);
+privateRoutes.get('/', UserController.list);
 
-    publicRoutes(){
-        this.routes.post('/', UserController.create);
-    }
-
-    privateRoutes(){
-        this.routes.use(authMiddleware);
-        this.routes.get('/', UserController.list);
-    }
+export default (routes:Router) => {
+    routes.use('/users', publicRoutes, privateRoutes);
 }
-
-export default new UserRoutes().routes;
