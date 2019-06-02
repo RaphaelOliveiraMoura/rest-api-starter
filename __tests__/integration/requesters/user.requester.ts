@@ -1,6 +1,6 @@
 import request from "supertest";
 import { Application } from 'express';
-import { User } from '../../../source/models/UserInterface';
+import User from '../../../source/models/domains/User';
 
 export default class UserRequest {
 

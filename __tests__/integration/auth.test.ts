@@ -6,7 +6,7 @@ import AuthRequester from './requesters/auth.requester';
 import UserRequester from './requesters/user.requester';
 
 // Interfaces
-import { User } from '../../source/models/UserInterface';
+import User from '../../source/models/domains/User';
 
 const authRequester = new AuthRequester(application.express);
 const userRequester = new UserRequester(application.express);
@@ -34,7 +34,7 @@ it('should return a error when the user pass a wrong password or email', async (
 
     const wrongUser = {
         email: 'wrong@gmal.com',
-        password: '123'
+        password: '123456'
     };
 
     const response = await authRequester.authenticate(wrongUser);

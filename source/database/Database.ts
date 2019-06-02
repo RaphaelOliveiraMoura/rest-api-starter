@@ -19,16 +19,7 @@ export class Database {
     private sequelize: Sequelize;
 
     constructor(private configurations: ISequelizeConfigParams) {
-        this.sequelize = new Sequelize({
-            dialect: configurations.dialect,
-            database: configurations.database,
-            host: configurations.host,
-            username: configurations.username,
-            password: configurations.password,
-            storage: configurations.storage,
-            modelPaths: configurations.modelPaths,
-            logging: configurations.logging
-        });
+        this.sequelize = new Sequelize(configurations);
     }
 
     async start() {
