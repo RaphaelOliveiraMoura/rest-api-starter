@@ -1,6 +1,5 @@
 import { isNumber } from "util";
 
-
 export type RulesInterface = {
     canBeNull?: boolean,
     minSize?: number,

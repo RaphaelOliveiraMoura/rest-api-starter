@@ -1,9 +1,8 @@
 import { EventEmitter } from "events";
 import User from "../models/domains/User";
 import UserRepository from "../models/repositories/User.repository";
-import { validator } from '../utils/Validator';
-import { sign } from 'jsonwebtoken';
-const protectKey = require('../../../credentials.json').protectKey;
+import { validator } from '../utils/validator';
+import { generateToken } from '../utils/jwtToken';
 
 export default class AuthService extends EventEmitter{
     
@@ -22,14 +21,8 @@ export default class AuthService extends EventEmitter{
             const user = await UserRepository.findOne({
                 where: { 'email':email, 'password':password }
             });
-
-            if (!user)
-                return this.emit('validation-error', 'Invalid credentials');
-
-            const token = sign({
-                data: user.id
-            }, protectKey, { expiresIn: 60 * 60 });
-
+            if (!user)  return this.emit('validation-error', 'Invalid credentials');
+            const token = generateToken(user.id);
             return this.emit('success', token);
         } catch (error) {
             return this.emit('error', 'Internal server error');
