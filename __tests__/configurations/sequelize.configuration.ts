@@ -1,6 +1,9 @@
 import { Op } from 'sequelize';
 
-const modelsPath = __dirname.split('/__tests__')[0] + '/source/models/**/*.model.js';
+import path from 'path';
+const basePath = __dirname.split('\__tests__')[0];
+const modelsPath = path.resolve(basePath, '\source','\models', '\**', '\*.repository.js');
+
 
 export default{
     dialect: process.env.TEST_DATABASE_DIALECT || 'mysql',

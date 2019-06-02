@@ -1,4 +1,6 @@
-const modelsPath = __dirname.split('/configuration')[0] + '/models/**/*.model.js';
+import path from 'path';
+const basePath = __dirname.split('\source')[0];
+const modelsPath = path.resolve(basePath, '\source','\models', '\**', '\*.repository.js');
 
 export default {
     dialect: process.env.DATABASE_DIALECT || 'mysql',
