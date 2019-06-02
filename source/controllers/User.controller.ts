@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import UserRepository from '../models/UserRepository.model';
-import { validator } from '../utils/Validator'
+import UserRepository from '../models/repositories/User.repository';
+import UserService from "../services/User.service";
 
 class UserController {
 
     /**
      * @route GET /users
      * @group Users
-     * @returns {object} 200 - An array of user info
-     * @returns {Error}  500 - Unexpected error
+     * @returns {object} 200 - A list of users
+     * @returns {Error} 500 - I
      * @security JWT
      */
     public async list(request: Request, response: Response): Promise<any> {
@@ -21,45 +21,48 @@ class UserController {
     }
 
     /**
-     * @typedef UserCreationModel
+     * @typedef UserCreationRequest
      * @property {string} name.required
      * @property {string} email.required
-     * @property {string} password.required - This is a model that represent information about the creation of users
+     * @property {string} password.required - This is a model that represent the necessary params to create a user 
+     */
+
+    /**
+     * @typedef UserCreationResponse
+     * @property {integer} id.required
+     * @property {string} name.required
+     * @property {string} email.required
+     * @property {string} createdAt.required
+     * @property {string} updatedAt.required - This represents a response model of a success creation user
      */
 
     /**
      * @route POST /users
      * @group Users
-     * @param {UserCreationModel.model} user.body.required - user
+     * @param {UserCreationRequest.model} user.body.required - user
      * @consumes application/json
      * @produces application/json
-     * @returns {object} 200 - Id of created user
-     * @returns {Error}  500 - Unexpected error
+     * @returns {UserCreationResponse.model} 200 - User informations
+     * @returns {Error} 400 - Invalid params
+     * @returns {Error} 500 - Internal Server Error
      */
     public async create(request: Request, response: Response): Promise<any> {
-
         const { name, email, password } = request.body;
+        const userService = new UserService();
 
-        try {
-            validator(name, 'name', { minSize: 2, maxSize: 25, hasNumbers: false }).validate();
-            validator(email, 'email', { minSize: 10, maxSize: 100 }).validate();
-            validator(password, 'password', { minSize: 6, maxSize: 25 }).validate();
-        } catch (error) {
+        userService.on('success', (user: any) => {
+            return response.status(200).json(user);
+        }).on('invalid-params', (error: string) => {
             return response.status(400).json({ error: error });
-        }
+        }).on('error', (error: string) => {
+            return response.status(500).json({ error: error });
+        })
 
-        try {
-            const user = await UserRepository.create({
-                name: request.body.name,
-                email: request.body.email,
-                password: request.body.password,
-            });
-            const responseUser:any = user;
-            responseUser.password = undefined;            
-            return response.status(200).json(responseUser);
-        } catch (error) {
-            return response.status(500).json({ error: 'Internal Server Error' });
-        }
+        userService.createUser({
+            name,
+            email,
+            password
+        });
     }
 }
 

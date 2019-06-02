@@ -1,49 +1,49 @@
 import { Request, Response } from "express";
-import UserRepository from '../models/UserRepository.model';
-import { sign } from 'jsonwebtoken';
-const protectKey = require('../../../credentials.json').protectKey;
+import AuthService from '../services/Auth.service';
 
 class AuthController {
 
     /**
-     * @typedef UserAuthenticationModel
+     * @typedef UserAuthenticationRequest
      * @property {string} email.required
-     * @property {string} password.required - This is a model that represent information about the authentication of users
+     * @property {string} password.required - Represents the params to authenticate a user
+     */
+
+     /**
+     * @typedef UserAuthenticationResponse
+     * @property {integer} token.required - Represents the response of a success authentication
      */
 
     /**
      * @route POST /authenticate
      * @group Authentication
-     * @param {UserAuthenticationModel.model} user.body.required - user
+     * @param {UserAuthenticationRequest.model} user.body.required - user
      * @consumes application/json
      * @produces application/json
-     * @returns {object} 200 - JWT Token
+     * @returns {UserAuthenticationResponse.model} 200 - JWT Token
      * @returns {Error}  401 - Invalid credentials
+     * @returns {Error}  422 - Invalid params
      * @returns {Error}  500 - Internal Server Error
      */
     public async authenticate(request: Request, response: Response): Promise<any> {
-        try {
+        
+        const { email, password } = request.body;
+        const authService = new AuthService();
+        
+        authService.on('success', (token: string) => {
+            return response.status(200).json({ token: token });
+        }).on('invalid-params', (error:string) => {
+            return response.status(422).json({ error: error });
+        }).on('validation-error', (error:string) => {
+            return response.status(401).json({ error: error });
+        }).on('error', (error: string) => {
+            return response.status(500).json({ error: error });
+        });
 
-            const user = await UserRepository.findOne({
-                where: {
-                    email: request.body.email,
-                    password: request.body.password
-                }
-            });
-
-            if (!user)
-                return response.status(401).json({ error: 'User not found' });
-
-            const jwtToken = sign({
-                data: user.id
-            }, protectKey, { expiresIn: 60 * 60 });
-
-            return response.status(200).json({ token: jwtToken });
-
-        } catch (error) {
-            response.status(500);
-            return response.json({ error: 'Internal Server Error' });
-        }
+        authService.authenticate({
+            email,
+            password
+        });
     }
 }
 
