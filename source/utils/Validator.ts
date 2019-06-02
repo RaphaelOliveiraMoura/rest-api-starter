@@ -15,10 +15,10 @@ export type RulesInterface = {
 class Validator {
 
     private rules: RulesInterface;
-    private value: number | string;
+    private value: any;
     private key: string;
 
-    constructor(value: number | string, key: string, rules: RulesInterface) {
+    constructor(value: any, key: string, rules: RulesInterface) {
         this.value = value;
         this.key = key;
         this.rules = {
@@ -51,7 +51,7 @@ class Validator {
     }
 
     private verifyIfHasNumbers() {
-        const hasNumbers = this.value.toString().split('').filter(value => isNumber(value)).length > 0
+        const hasNumbers = this.value.toString().split('').filter((value:any) => isNumber(value)).length > 0
 
         if (!this.rules.hasNumbers && hasNumbers)
             throw `${this.key} cannot have numbers`
@@ -64,14 +64,14 @@ class Validator {
         }
 
         if (this.rules.maxSize && this.value.toString().length > this.rules.maxSize) {
-            throw `${this.key} should be the size smaller then ${this.rules.maxSize} characters`
+            throw `${this.key} should be the size equals or smaller then ${this.rules.maxSize} characters`
         }
 
         if (this.rules.minSize && this.value.toString().length < this.rules.minSize) {
-            throw `${this.key} should be the size bigger then ${this.rules.minSize} characters`
+            throw `${this.key} should be the size equals or bigger then ${this.rules.minSize} characters`
         }
     }
 
 }
 
-export const validator = (value: string | number, key: string, rules: RulesInterface) => new Validator(value, key, rules);
+export const validator = (value: any, key: string, rules: RulesInterface) => new Validator(value, key, rules);
