@@ -11,8 +11,8 @@ npm run start
 
 To run the application, first verify if this softwares are installed:
 
-> Node v10.15.3
-> Npm (Node package manager) v6.9.0
+- Node v10.15.3
+- Npm (Node package manager) v6.9.0
 
 To certify that this softwares are installed in your environment, just go in terminal and type:
 ```
