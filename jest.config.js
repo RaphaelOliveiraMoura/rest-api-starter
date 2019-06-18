@@ -6,8 +6,12 @@ module.exports = {
   // automock: false,
 
   // Stop running tests after `n` failures
-  bail: 0,
+  bail: 1,
 
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  
   // Respect "browser" field in package.json when resolving modules
   // browser: false,
 
@@ -109,7 +113,7 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: './build/__tests__/',
+  rootDir: './__tests__/',
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -139,7 +143,7 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/__tests__/**/*test.[jt]s?(x)",
+    "**/__tests__/**/*test.[ts]s?(x)",
     // "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
 
@@ -182,4 +186,10 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  globals: {
+    'ts-jest': {
+      diagnostics: false
+    }
+  }
 };
