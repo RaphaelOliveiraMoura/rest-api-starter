@@ -1,12 +1,13 @@
 import { application } from "../../source/app";
-import databaseConfiguration from '../configurations/sequelize.configuration';
+import Database from '../../database';
+import { test } from '../../database/configurations';
 
 // Request Utils
 import AuthRequester from './requesters/auth.requester';
 import UserRequester from './requesters/user.requester';
 
 // Interfaces
-import User from '../../source/models/domains/User';
+import User from '../../source/models/User';
 
 const authRequester = new AuthRequester(application.express);
 const userRequester = new UserRequester(application.express);
@@ -18,7 +19,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await application.syncDatabase(databaseConfiguration);
+    await Database.getInstance(test).sync();
 })
 
 it('should response a success message and status 200 without errors when pass the correct args', async () => {
@@ -49,7 +50,7 @@ it('should return a list of users and 200 status', async () => {
         'email': user.email,
         'password': user.password
     });
-    
+
     const response = await userRequester.list(body.token);
     expect(response.status).toEqual(200);
     expect(response.text).toContain([]);

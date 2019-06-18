@@ -2,7 +2,6 @@ import express from "express";
 import routes from './routes';
 import applicationConfiguration from './configuration/application.configuration';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
-import { Database, ISequelizeConfigParams } from './database/Database';
 
 export class ApplicationController {
 
@@ -13,11 +12,6 @@ export class ApplicationController {
         this.middlewares();
         this.routes();
         this.apiDocumentation();
-    }
-
-    public async syncDatabase(sequelizeConfiguration: ISequelizeConfigParams) {
-        const database = new Database(sequelizeConfiguration);
-        await database.start();
     }
 
     public listen(port: string | number, callback: () => void): void {

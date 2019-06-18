@@ -1,15 +1,10 @@
 import { application } from './app';
 import configuration from './configuration/application.configuration';
-import sequelizeConfiguration from './configuration/sequelize.configuration';
+import Database from '../database/index';
+import { main } from '../database/configurations'
 
-startServer();
+Database.getInstance(main).sync();
 
-async function startServer() {
-
-    await application.syncDatabase(sequelizeConfiguration);
-
-    application.listen(configuration.port, () => {
-        console.log(`Server listening on ${configuration.host}:${configuration.port} ...`);
-    });
-
-}
+application.listen(configuration.port, () => {
+    console.log(`Server listening on ${configuration.host}:${configuration.port} ...`);
+});
