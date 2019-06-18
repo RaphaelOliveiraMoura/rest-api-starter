@@ -58,6 +58,36 @@ This is a base to create APIS with nodeJs, using Typescript. This project will h
 ## technologies
 
 ## architeture
+The code structure is like this:
+- 📂 basedir
+    - 📂 __tests__
+        - 📂 database
+        - 📂 integration
+        - 📂 unit
+    - 📂 database
+    - 📂 documentation
+    - 📂 source
+        - 📂 configuration
+        - 📂 controllers
+        - 📂 database
+        - 📂 middlewares
+        - 📂 models
+        - 📂 routes
+        - 📂 services
+        - 📂 utils
+
+#### 📌 (__tests__)
+This folder contains all tests of the application.
+The configuration of database that will be run the tests are in the database folder.
+
+#### 📌 (database)
+In the database folder are the migrations and seeders builded with sequelize cli.
+
+#### 📌 (documentation)
+
+
+#### 📌 (source)
+
 
 ## goals
 
