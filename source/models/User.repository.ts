@@ -1,5 +1,6 @@
 import { Model, DataTypes, ModelAttributes } from 'sequelize';
 import SequelizeDatabase from '../../database';
+import { test } from '../../database/configurations'
 
 export default class UserRepository extends Model {
     public id!: number;
@@ -33,5 +34,5 @@ const tables: ModelAttributes = {
 
 UserRepository.init(tables, {
     tableName: 'users',
-    sequelize: SequelizeDatabase.getSequelizeInstance();
+    sequelize: SequelizeDatabase.getInstance(test).sequelize
 });

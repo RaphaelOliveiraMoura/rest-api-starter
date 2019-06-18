@@ -1,15 +1,20 @@
 import { Router } from "express";
 
-import userRoutes from "./user.routes";
-import authRoutes from "./auth.routes";
+import authMiddleware from "../middlewares/auth.middleware";
 
-class RoutesController{
-    public routes: Router = Router();
+import AuthController from "../controllers/Auth.controller";
+import UserController from "../controllers/User.controller";
 
-    constructor(){
-        userRoutes(this.routes);
-        authRoutes(this.routes);
-    }
-}
+const users = Router()
+    .post('/', UserController.create)
+    .use(authMiddleware)
+    .get('/', UserController.list);
 
-export default new RoutesController().routes;
+const authenticate = Router()
+    .post('/', AuthController.authenticate);;
+
+const routes = Router()
+    .use('/users', users)
+    .use('/authenticate', authenticate);
+
+export default routes;
