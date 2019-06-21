@@ -1,8 +1,9 @@
 import { EventEmitter } from "events";
-import User from "../models/User";
-import UserRepository from "../models/User.repository";
+import User from "../interfaces/User";
+import { UserRepository } from '../models/User.Repository';
 import { validator } from '../utils/validator';
 import { generateToken } from '../utils/jwtToken';
+
 
 export default class AuthService extends EventEmitter{
     
@@ -19,7 +20,7 @@ export default class AuthService extends EventEmitter{
 
         try {
             const user = await UserRepository.findOne({
-                where: { 'email':email, 'password':password }
+                where: { 'email':email!, 'password':password! }
             });
             if (!user)  return this.emit('validation-error', 'Invalid credentials');
             const token = generateToken(user.id);

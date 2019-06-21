@@ -1,28 +1,26 @@
+import application from "../../../source/app";
 import request from "supertest";
-import { Application } from 'express';
-import User from '../../../source/models/User';
+import { User } from '../../../source/models/User.Repository';
 
-export default class UserRequest {
+async function create(user: User) {
+    return await request(application.express)
+        .post('/api/v1/users')
+        .set({
+            'Accept': 'application/json'
+        })
+        .send(user);
+}
 
-    constructor(private express: Application) {
+async function list(token: string) {
+    return await request(application.express)
+        .get('/api/v1/users')
+        .set({
+            'Accept': 'application/json',
+            'Authorization': token
+        })
+}
 
-    }
-
-    async create(user: User) {
-        return await request(this.express)
-            .post('/api/v1/users')
-            .set({
-                'Accept': 'application/json'
-            })
-            .send(user);
-    }
-
-    async list(token: string) {
-        return await request(this.express)
-            .get('/api/v1/users')
-            .set({
-                'Accept': 'application/json',
-                'Authorization': token
-            })
-    }
+export default {
+    create,
+    list
 }

@@ -1,16 +1,6 @@
-import { application } from "../../source/app";
-import Database from '../../database';
-import { test } from '../../database/configurations';
-
-// Request Utils
-import AuthRequester from './requesters/auth.requester';
-import UserRequester from './requesters/user.requester';
-
-// Interfaces
-import User from '../../source/models/User';
-
-const authRequester = new AuthRequester(application.express);
-const userRequester = new UserRequester(application.express);
+import authRequester from './requesters/auth.requester';
+import userRequester from './requesters/user.requester';
+import { User } from '../../source/models/User.Repository';
 
 const user: User = {
     name: 'john',
@@ -19,7 +9,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await Database.getInstance(test).sync();
+
 })
 
 it('should response a success message and status 200 without errors when pass the correct args', async () => {

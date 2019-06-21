@@ -3,7 +3,7 @@ import routes from './routes';
 import applicationConfiguration from './configuration/application.configuration';
 import swaggerConfigurationOptions from './configuration/swagger.configuration';
 
-export class ApplicationController {
+class ApplicationController {
 
     public express: express.Application;
 
@@ -33,4 +33,4 @@ export class ApplicationController {
 
 }
 
-export const application = new ApplicationController();
+export default new ApplicationController();

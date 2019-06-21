@@ -1,12 +1,13 @@
 import { EventEmitter } from "events";
-import User from "../models/User";
-import UserRepository from "../models/User.repository";
+import User from "../interfaces/User";
 import { validator } from '../utils/validator'
 
-export default class UserService extends EventEmitter{
-    
-    async createUser(user: User){
-        
+import { UserRepository } from '../models/User.Repository'
+
+export default class UserService extends EventEmitter {
+
+    async createUser(user: User) {
+
         try {
             validator(user.name, 'name', { minSize: 2, maxSize: 25, hasNumbers: false }).validate();
             validator(user.email, 'email', { minSize: 10, maxSize: 100 }).validate();
@@ -16,9 +17,9 @@ export default class UserService extends EventEmitter{
         }
 
         try {
-            const createdUser:any = await UserRepository.create(user);
-            if(!createdUser)
-                return this.emit('error', 'Error saving user'); 
+            const createdUser: any = await UserRepository.create(user);
+            if (!createdUser)
+                return this.emit('error', 'Error saving user');
             createdUser.password = undefined;
             return this.emit('success', createdUser);
         } catch (error) {

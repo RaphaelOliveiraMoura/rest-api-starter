@@ -1,17 +1,9 @@
+import application from "../../../source/app";
 import request from "supertest";
-import { Application } from 'express';
-import User from '../../../source/models/User';
+import { User } from '../../../source/models/User.Repository';
 
-export default class AuthRequest {
-    
-    private express: Application;
-
-    constructor(express: Application) {
-        this.express = express;
-    }
-
-    async authenticate(user: User){
-        return await request(this.express)
+async function authenticate(user: User) {
+    return await request(application.express)
         .post('/api/v1/authenticate')
         .set({
             'Accept': 'application/json'
@@ -20,5 +12,8 @@ export default class AuthRequest {
             'email': user.email,
             'password': user.password
         });
-    }
+}
+
+export default {
+    authenticate
 }

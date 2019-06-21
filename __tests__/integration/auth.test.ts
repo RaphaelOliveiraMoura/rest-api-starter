@@ -1,16 +1,7 @@
-import { application } from "../../source/app";
-import Database from '../../database';
-import { test } from '../../database/configurations';
-
-// Request Utils
-import AuthRequester from './requesters/auth.requester';
-import UserRequester from './requesters/user.requester';
-
-// Interfaces
-import User from '../../source/models/User';
-
-const authRequester = new AuthRequester(application.express);
-const userRequester = new UserRequester(application.express);
+import sequelize from '../../source/utils/databaseHelper';
+import authRequester from './requesters/auth.requester';
+import userRequester from './requesters/user.requester';
+import { User } from '../../source/models/User.Repository';
 
 const user: User = {
     name: 'teste',
@@ -19,7 +10,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await Database.getInstance(test).sync();
+    await sequelize.sync({force: true});
     const response = await userRequester.create(user);
     expect(response.status).toEqual(200);
 })
