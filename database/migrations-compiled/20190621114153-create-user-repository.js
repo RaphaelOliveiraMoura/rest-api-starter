@@ -2,7 +2,7 @@
 exports.__esModule = true;
 module.exports = {
     up: function (queryInterface, Sequelize) {
-        return queryInterface.createTable('UserRepositories', {
+        return queryInterface.createTable('users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -10,6 +10,12 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             name: {
+                type: Sequelize.STRING
+            },
+            email: {
+                type: Sequelize.STRING
+            },
+            password: {
                 type: Sequelize.STRING
             },
             createdAt: {

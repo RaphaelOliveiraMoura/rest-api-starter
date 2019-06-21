@@ -4,7 +4,7 @@ import {
 
 module.exports = {
     up: (queryInterface: QueryInterface, Sequelize: any) => {
-        return queryInterface.createTable('UserRepositories', {
+        return queryInterface.createTable('users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -13,6 +13,14 @@ module.exports = {
             },
 
             name: {
+                type: Sequelize.STRING
+            },
+
+            email: {
+                type: Sequelize.STRING
+            },
+
+            password: {
                 type: Sequelize.STRING
             },
 
