@@ -1,9 +1,9 @@
 import {
     QueryInterface,
-    SequelizeStatic
 } from 'sequelize';
+
 module.exports = {
-    up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
+    up: (queryInterface: QueryInterface, Sequelize: any) => {
         return queryInterface.createTable('UserRepositories', {
             id: {
                 allowNull: false,
@@ -28,7 +28,7 @@ module.exports = {
         });
     },
 
-    down: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
+    down: (queryInterface: QueryInterface, Sequelize: any) => {
         return queryInterface.dropTable('UserRepositories');
     }
 };

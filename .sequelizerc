@@ -4,7 +4,7 @@ const configurations = {
 	'config': path.resolve('database', 'configurations', 'index.ts'),
 	'models-path': path.resolve('source', 'models'),
 	'migrations-source-path': path.resolve('database', 'migrations'),
-	'migrations-compiled-path': path.resolve('database', 'migrations', 'compiled'),
+	'migrations-compiled-path': path.resolve('database', 'migrations-compiled'),
 	'seeders-path': path.resolve('database', 'seeders'),
 }
 

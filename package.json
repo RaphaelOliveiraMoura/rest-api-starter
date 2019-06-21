@@ -10,7 +10,9 @@
     "start": "node .",
     "build": "",
     "dev": "sucrase-node source/index.ts",
-    "test": "export NODE_ENV=test && jest --runInBand --detectOpenHandles"
+    "test": "export NODE_ENV=test && jest --runInBand --detectOpenHandles",
+    "migrate": "npm run migrate:build && npx sequelize-cli-typescript db:migrate",
+    "migrate:build": "tsc ./database/migrations/* --outDir ./database/migrations-compiled/ "
   },
   "repository": {
     "type": "git",
