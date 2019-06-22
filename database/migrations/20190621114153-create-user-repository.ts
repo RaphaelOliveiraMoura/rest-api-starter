@@ -1,42 +1,45 @@
 import {
     QueryInterface,
+    DataTypes,
+    Sequelize
 } from 'sequelize';
 
 module.exports = {
-    up: (queryInterface: QueryInterface, Sequelize: any) => {
+    up: (queryInterface: QueryInterface, Sequelize: Sequelize) => {
         return queryInterface.createTable('users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
 
             name: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
 
             email: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING,
+                unique: true
             },
 
             password: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
 
-            createdAt: {
+            created_at: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
 
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
     },
 
     down: (queryInterface: QueryInterface, Sequelize: any) => {
-        return queryInterface.dropTable('UserRepositories');
+        return queryInterface.dropTable('users');
     }
 };

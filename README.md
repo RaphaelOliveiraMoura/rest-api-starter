@@ -1,9 +1,10 @@
 ## Overview
 ```
 # git clone https://github.com/RaphaelOliveiraMoura/rest-api-starter.git
-> Set the environment configurations in the .env
+> Create a .env file and configure it
+> Create a credentials.json file and configure it
 # npm install
-# npm start
+# npm run start:build
 ```
 
 ## Table of contents

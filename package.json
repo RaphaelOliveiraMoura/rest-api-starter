@@ -12,7 +12,7 @@
     "test": "export NODE_ENV=test && jest --runInBand --detectOpenHandles",
     "test:windowns": "@powershell $env:NODE_ENV=\"'test'\"; npx jest --runInBand --detectOpenHandles",
     "migrate": "npm run migrate:build && npx sequelize-cli-typescript db:migrate",
-    "migrate:build": "tsc ./database/migrations/* --outDir ./database/migrations-compiled/ "
+    "migrate:build": "tsc --p ./database/migrations/tsconfig.json --outDir ./database/migrations-compiled/"
   },
   "repository": {
     "type": "git",
