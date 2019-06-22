@@ -1,6 +1,8 @@
 import { sign, verify } from 'jsonwebtoken';
 
-const protectKey = require('../../credentials.json').secret;
+import path from 'path';
+const credentialsPath = path.resolve('credentials.json');
+const protectKey = require(credentialsPath).secret;
 
 export const generateToken = (id: string|number) => {
     return sign({

@@ -1,8 +1,6 @@
 import { EventEmitter } from "events";
-import User from "../interfaces/User";
 import { validator } from '../utils/validator'
-
-import { UserRepository } from '../models/User.Repository'
+import { UserRepository, User } from '../models/User.Repository'
 
 export default class UserService extends EventEmitter {
 

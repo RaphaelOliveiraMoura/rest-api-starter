@@ -1,6 +1,7 @@
 ## Overview
 ```
 # git clone https://github.com/RaphaelOliveiraMoura/rest-api-starter.git
+> Set the environment configurations in the .env
 # npm install
 # npm start
 ```
@@ -75,19 +76,6 @@ The code structure is like this:
         - 📂 routes
         - 📂 services
         - 📂 utils
-
-#### 📌 (__tests__)
-This folder contains all tests of the application.
-The configuration of database that will be run the tests are in the database folder.
-
-#### 📌 (database)
-In the database folder are the migrations and seeders builded with sequelize cli.
-
-#### 📌 (documentation)
-
-
-#### 📌 (source)
-
 
 ## goals
 
