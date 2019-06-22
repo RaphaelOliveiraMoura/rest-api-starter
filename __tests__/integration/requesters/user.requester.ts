@@ -1,6 +1,6 @@
 import application from "../../../source/app";
 import request from "supertest";
-import { User } from '../../../source/models/User.Repository';
+import { User } from '../../../source/models/User';
 
 async function create(user: User) {
     return await request(application.express)

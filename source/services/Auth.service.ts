@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { UserRepository, User } from '../models/User.Repository';
+import { UserRepository, User } from '../models/User';
 import { validator } from '../utils/validator';
 import { generateToken } from '../utils/jwtToken';
 

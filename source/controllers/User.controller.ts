@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRepository } from '../models/User.Repository'
+import { UserRepository } from '../models/User'
 import UserService from "../services/User.service";
 
 class UserController {

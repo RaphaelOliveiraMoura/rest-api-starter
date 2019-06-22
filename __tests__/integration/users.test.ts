@@ -1,6 +1,6 @@
 import authRequester from './requesters/auth.requester';
 import userRequester from './requesters/user.requester';
-import { User } from '../../source/models/User.Repository';
+import { User } from '../../source/models/User';
 
 const user: User = {
     name: 'john',

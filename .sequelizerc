@@ -8,6 +8,4 @@ const configurations = {
 	'seeders-path': path.resolve('database', 'seeders'),
 }
 
-console.log(configurations);
-
 module.exports = configurations;
