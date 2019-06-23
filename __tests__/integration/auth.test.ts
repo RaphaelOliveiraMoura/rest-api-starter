@@ -1,7 +1,6 @@
-import sequelize from '../../source/utils/databaseHelper';
 import authRequester from './requesters/auth.requester';
 import userRequester from './requesters/user.requester';
-import { User } from '../../source/models/User';
+import { UserRepository, User } from '../../source/models/User';
 
 const user: User = {
     name: 'teste',
@@ -10,7 +9,9 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await sequelize.sync({force: true});
+    await UserRepository.destroy({
+        truncate: true
+    });
     const response = await userRequester.create(user);
     expect(response.status).toEqual(200);
 })

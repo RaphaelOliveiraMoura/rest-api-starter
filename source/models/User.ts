@@ -4,7 +4,7 @@ import {
     Model,
 } from 'sequelize';
 
-import sequelize from '../utils/databaseHelper';
+import sequelize from '../utils/databaseStarter';
 
 export class UserRepository extends Model {
     readonly id!: number;
