@@ -13,8 +13,6 @@ const users = Router()
 const authenticate = Router()
     .post('/', AuthController.authenticate);;
 
-const routes = Router()
+export default Router()
     .use('/users', users)
     .use('/authenticate', authenticate);
-
-export default routes;

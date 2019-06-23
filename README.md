@@ -4,6 +4,7 @@
 > Create a .env file and configure it
 > Create a credentials.json file and configure it
 # npm install
+# npm run migrate
 # npm run start:build
 ```
 
