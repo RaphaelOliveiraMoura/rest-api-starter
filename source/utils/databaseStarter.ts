@@ -7,7 +7,7 @@ console.log('>> Environment:', env);
 
 const { database, username, password, host, dialect } = configurations[env];
 
-const logging = process.env.DATABASE_LOG == 'true' ? undefined : false;
+const logging = process.env.DATABASE_LOG == 'true' ? (msg: string)=>console.log(msg) : false;
 
 const sequelize = new Sequelize(database, username, password, {
   host,

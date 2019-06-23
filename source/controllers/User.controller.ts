@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserRepository } from '../models/User'
 import UserService from "../services/User.service";
+import { EventEmitter } from "events";
 
 class UserController {
 
@@ -50,19 +51,20 @@ class UserController {
         const { name, email, password } = request.body;
         const userService = new UserService();
 
-        userService.on('success', (user: any) => {
+        const eventEmitter = new EventEmitter();
+        eventEmitter.on('success', (user: any) => {
             return response.status(200).json(user);
         }).on('invalid-params', (error: string) => {
             return response.status(400).json({ error: error });
         }).on('error', (error: string) => {
             return response.status(500).json({ error: error });
-        })
+        });
 
-        userService.createUser({
+        await userService.createUser(eventEmitter, {
             name,
             email,
             password
-        });
+        })
     }
 }
 
