@@ -14,8 +14,16 @@ export default class UserService extends EventEmitter {
             return this.emit('invalid-params', error);
         }
 
+        const existUser = await UserRepository.findOne({
+            where: { 'email': user.email! }
+        });
+
+        if(existUser){
+            return this.emit('invalid-params', 'User already exists');
+        }
+
         try {
-            const createdUser: any = await UserRepository.create(user);
+            const createdUser: User = await UserRepository.create(user);
             if (!createdUser)
                 return this.emit('error', 'Error saving user');
             createdUser.password = undefined;
