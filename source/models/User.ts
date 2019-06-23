@@ -5,6 +5,7 @@ import {
 } from 'sequelize';
 
 import sequelize from '../utils/databaseStarter';
+import { encrypt } from '../utils/crypter';
 
 export class UserRepository extends Model {
     readonly id!: number;
@@ -44,3 +45,7 @@ UserRepository.init(columns, {
     sequelize,
     tableName: 'users'
 });
+
+UserRepository.beforeCreate(async (user: User)=>{
+   user.password = encrypt(user.password!);
+})

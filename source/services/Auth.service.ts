@@ -2,13 +2,15 @@ import { EventEmitter } from "events";
 import { UserRepository, User } from '../models/User';
 import { validator } from '../utils/validator';
 import { generateToken } from '../utils/jwtToken';
+import { compare } from "../utils/crypter";
 
 class AuthService{
     
     async authenticate(eventEmitter: EventEmitter, user: User){
         try {
             await this.validateParams(user);
-            await this.verifyIfUserExists(user);
+            const { password } = await this.getUserByEmail(user);
+            await this.verifyPassword(password, user.password!);
             const token = await this.generateJWTToken(user.id!);
             return eventEmitter.emit('success', token);
         } catch (error) {
@@ -27,16 +29,22 @@ class AuthService{
         }
     }
 
-    private async verifyIfUserExists(user: User){
-        const { email, password } = user;
+    private async getUserByEmail(user: User){
+        const { email } = user;
 
         const existUser = await UserRepository.findOne({
-            where: { 'email':email!, 'password':password! }
+            where: { 'email':email! }
         }).catch(()=>{
             throw { type: 'error', description: 'Error fetching user' };
         });
 
-        if (!existUser) throw { type: 'validation-error', description: 'Invalid credentials' };
+        if (!existUser) throw { type: 'validation-error', description: 'User dont exist' };
+        return existUser;
+    }
+
+    private async verifyPassword(encryptedPassword: string, passwordInput: string){
+        const correctPassword = compare(encryptedPassword, passwordInput);
+        if (!correctPassword) throw { type: 'validation-error', description: 'Invalid password' };
     }
 
     private async generateJWTToken(id: number){
