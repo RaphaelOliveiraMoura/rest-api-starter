@@ -19,7 +19,7 @@ class ApplicationController {
     }
 
     private apiDocumentation(): void {
-        const expressSwagger = require('express-comments-swagger')(this.express);
+        const expressSwagger = require('express-swagger-generator')(this.express);
         expressSwagger(swaggerConfigurationOptions);
     }
 

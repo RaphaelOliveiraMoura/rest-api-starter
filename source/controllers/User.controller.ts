@@ -53,7 +53,6 @@ class UserController {
     public async create(request: Request, response: Response): Promise<any> {
         const { name, email, password } = request.body;
         
-
         const eventEmitter = new EventEmitter();
         eventEmitter.on('success', (user: User) => {
             return response.status(200).json(user);
