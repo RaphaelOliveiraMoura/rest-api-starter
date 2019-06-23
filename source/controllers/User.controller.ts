@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { UserRepository } from '../models/User'
 import UserService from "../services/User.service";
 import { EventEmitter } from "events";
+import { User } from "../models/User";
 
 class UserController {
 
@@ -9,16 +9,19 @@ class UserController {
      * @route GET /users
      * @group Users
      * @returns {object} 200 - A list of users
-     * @returns {Error} 500 - I
+     * @returns {Error} 500 - Internal Server Error
      * @security JWT
      */
     public async list(request: Request, response: Response): Promise<any> {
-        try {
-            const users = await UserRepository.findAll();
+        const eventEmitter = new EventEmitter();
+
+        eventEmitter.on('success', (users: User[]) => {
             return response.status(200).json(users);
-        } catch (error) {
-            return response.status(500).json({ error: 'Internal Server Error' });
-        }
+        }).on('error', (error: string) => {
+            return response.status(500).json({ error: error });
+        });
+
+        await UserService.listUsers(eventEmitter);
     }
 
     /**
@@ -49,10 +52,10 @@ class UserController {
      */
     public async create(request: Request, response: Response): Promise<any> {
         const { name, email, password } = request.body;
-        const userService = new UserService();
+        
 
         const eventEmitter = new EventEmitter();
-        eventEmitter.on('success', (user: any) => {
+        eventEmitter.on('success', (user: User) => {
             return response.status(200).json(user);
         }).on('invalid-params', (error: string) => {
             return response.status(400).json({ error: error });
@@ -60,7 +63,7 @@ class UserController {
             return response.status(500).json({ error: error });
         });
 
-        await userService.createUser(eventEmitter, {
+        await UserService.createUser(eventEmitter, {
             name,
             email,
             password

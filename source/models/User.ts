@@ -14,6 +14,7 @@ export class UserRepository extends Model {
 }
 
 export interface User {
+    id?: number,
     name?: string,
     email?: string,
     password?: string

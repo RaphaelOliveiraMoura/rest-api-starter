@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import AuthService from '../services/Auth.service';
+import { EventEmitter } from "events";
 
 class AuthController {
 
@@ -28,9 +29,9 @@ class AuthController {
     public async authenticate(request: Request, response: Response): Promise<any> {
         
         const { email, password } = request.body;
-        const authService = new AuthService();
+        const eventEmitter = new EventEmitter();
         
-        authService.on('success', (token: string) => {
+        eventEmitter.on('success', (token: string) => {
             return response.status(200).json({ token: token });
         }).on('invalid-params', (error:string) => {
             return response.status(422).json({ error: error });
@@ -40,7 +41,7 @@ class AuthController {
             return response.status(500).json({ error: error });
         });
 
-        authService.authenticate({
+        AuthService.authenticate(eventEmitter, {
             email,
             password
         });
