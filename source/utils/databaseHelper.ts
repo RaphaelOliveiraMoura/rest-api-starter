@@ -10,7 +10,11 @@ const { database, username, password, host, dialect } = configurations[env];
 const sequelize = new Sequelize(database, username, password, {
   host,
   dialect,
-  logging: false
+  logging: false,
+  define: {
+    freezeTableName: true,
+    underscored: true
+  }
 });
 
 export default sequelize;

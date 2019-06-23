@@ -1,3 +1,4 @@
+import sequelize from '../../source/utils/databaseHelper';
 import authRequester from './requesters/auth.requester';
 import userRequester from './requesters/user.requester';
 import { User } from '../../source/models/User';
@@ -9,7 +10,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-
+    await sequelize.sync({force: true});
 })
 
 it('should response a success message and status 200 without errors when pass the correct args', async () => {

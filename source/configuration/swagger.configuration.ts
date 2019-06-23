@@ -1,8 +1,6 @@
 import configuration from './application.configuration';
 
-const host = process.env.ENV === 'development'
-    ? `${configuration.host}:${configuration.port}`
-    : configuration.host;
+const host = `${configuration.host}:${configuration.port}`;
 
 const header = {
     description: 'This is a sample server',

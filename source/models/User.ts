@@ -41,5 +41,5 @@ const columns: ModelAttributes = {
 
 UserRepository.init(columns, {
     sequelize,
-    tableName: 'users',
+    tableName: 'users'
 });
