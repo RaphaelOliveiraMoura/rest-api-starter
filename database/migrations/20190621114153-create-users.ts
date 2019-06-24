@@ -32,12 +32,14 @@ module.exports = {
 
             created_at: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: DataTypes.DATE,
+                defaultValue: new Date()
             },
 
             updated_at: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: DataTypes.DATE,
+                defaultValue: new Date()
             }
         });
     },

@@ -34,12 +34,14 @@ export = {
 
             createdAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: DataTypes.DATE,
+                defaultValue: new Date()
             },
 
             updatedAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: DataTypes.DATE,
+                defaultValue: new Date()
             }
         });
     },
