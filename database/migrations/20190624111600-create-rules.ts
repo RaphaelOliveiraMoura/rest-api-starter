@@ -4,9 +4,9 @@ import {
     Sequelize
 } from 'sequelize';
 
-module.exports = {
+export = {
     up: (queryInterface: QueryInterface, Sequelize: Sequelize) => {
-        return queryInterface.createTable('users', {
+        return queryInterface.createTable('rules', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -15,31 +15,28 @@ module.exports = {
             },
 
             name: {
+                allowNull: false,
                 type: DataTypes.STRING
             },
 
-            email: {
-                type: DataTypes.STRING,
-                unique: true
-            },
-
-            password: {
+            description: {
+                allowNull: false,
                 type: DataTypes.STRING
             },
 
-            created_at: {
+            createdAt: {
                 allowNull: false,
                 type: DataTypes.DATE
             },
 
-            updated_at: {
+            updatedAt: {
                 allowNull: false,
                 type: DataTypes.DATE
             }
         });
     },
 
-    down: (queryInterface: QueryInterface, Sequelize: any) => {
-        return queryInterface.dropTable('users');
+    down: (queryInterface: QueryInterface, Sequelize: Sequelize) => {
+        return queryInterface.dropTable('rules');
     }
 };

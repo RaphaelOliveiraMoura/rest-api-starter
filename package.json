@@ -13,7 +13,8 @@
     "test:windowns": "@powershell $env:NODE_ENV=\"'test'\"; npx jest --runInBand --detectOpenHandles",
     "migrate": "npm run migrate:build && npx sequelize-cli-typescript db:migrate",
     "migrate:test": "npm run migrate:build && npx sequelize-cli-typescript db:migrate --env test",
-    "migrate:build": "tsc --p ./database/migrations/tsconfig.json --outDir ./database/migrations-compiled/"
+    "migrate:build": "tsc --p ./database/migrations/tsconfig.json --outDir ./database/migrations-compiled/",
+    "model:create": "npx sequelize-cli-typescript model:generate"
   },
   "repository": {
     "type": "git",
@@ -53,6 +54,6 @@
     "express-swagger-generator": "^1.1.15",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.8.6"
+    "sequelize": "^5.8.12"
   }
 }

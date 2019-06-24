@@ -1,36 +1,48 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = require("sequelize");
+import {
+    QueryInterface,
+    DataTypes,
+    Sequelize
+} from 'sequelize';
+
 module.exports = {
-    up: (queryInterface, Sequelize) => {
+    up: (queryInterface: QueryInterface, Sequelize: Sequelize) => {
         return queryInterface.createTable('users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: sequelize_1.DataTypes.INTEGER
+                type: DataTypes.INTEGER
             },
+
             name: {
-                type: sequelize_1.DataTypes.STRING
+                allowNull: false,
+                type: DataTypes.STRING
             },
+
             email: {
-                type: sequelize_1.DataTypes.STRING,
+                allowNull: false,
+                type: DataTypes.STRING,
                 unique: true
             },
+
             password: {
-                type: sequelize_1.DataTypes.STRING
+                allowNull: false,
+                type: DataTypes.STRING
             },
+
             created_at: {
                 allowNull: false,
-                type: sequelize_1.DataTypes.DATE
+                type: DataTypes.DATE
             },
+
             updated_at: {
                 allowNull: false,
-                type: sequelize_1.DataTypes.DATE
+                type: DataTypes.DATE
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+
+    down: (queryInterface: QueryInterface, Sequelize: any) => {
         return queryInterface.dropTable('users');
     }
 };

@@ -9,9 +9,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await UserRepository.destroy({
-        truncate: true
-    });
+    await (<any>UserRepository).destroy({ 'truncate': { 'cascade': true } });
 })
 
 it('should response a success message and status 200 without errors when pass the correct args', async () => {

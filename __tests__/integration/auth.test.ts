@@ -9,9 +9,7 @@ const user: User = {
 }
 
 beforeAll(async () => {
-    await UserRepository.destroy({
-        truncate: true
-    });
+    await (<any>UserRepository).destroy({ 'truncate': { 'cascade': true } });
     const response = await userRequester.create(user);
     expect(response.status).toEqual(200);
 })

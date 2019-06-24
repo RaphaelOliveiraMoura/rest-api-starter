@@ -88,6 +88,8 @@ The structure of the json file should look like this:
 
 ### scripts
 
+npm run model:create -- --name=UserRules --attributes=userId:number,ruleId:number
+
 ### tests
 
 ### documentation
