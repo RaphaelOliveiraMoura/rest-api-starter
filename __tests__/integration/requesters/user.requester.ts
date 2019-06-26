@@ -11,7 +11,8 @@ async function create(user: User) {
         .send(user);
 }
 
-async function list(token: string) {
+async function list(params: { token: string }) {
+    const { token } = params;
     return await request(application.express)
         .get('/api/v1/users')
         .set({

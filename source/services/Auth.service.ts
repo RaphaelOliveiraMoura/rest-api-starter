@@ -3,23 +3,32 @@ import { UserRepository, User } from '../models/User';
 import { validator } from '../utils/validator';
 import { generateToken } from '../utils/jwtToken';
 import { compare } from "../utils/crypter";
+import { emitError, emitSuccess } from "../utils/emitterHelper";
 
 class AuthService{
     
-    async authenticate(eventEmitter: EventEmitter, user: User){
+    async authenticate(eventEmitter: EventEmitter, userInput: User){
         try {
-            await this.validateParams(user);
-            const { password } = await this.getUserByEmail(user);
-            await this.verifyPassword(password, user.password!);
-            const token = await this.generateJWTToken(user.id!);
-            return eventEmitter.emit('success', token);
+            await this.validateUserInputParameters(userInput);
+            const user = await this.verifyIfUserExistAndReturnUserInformations(userInput);
+            await this.compareUserInputPasswordWithEncryptPassword({
+                'userInputPassword': userInput.password,
+                'userEncryptPassword': user.password
+            });
+            const token = await this.generateAndReturnJWTToken(user.id!);
+            return emitSuccess(eventEmitter, {
+                token,
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'rules': []
+            });
         } catch (error) {
-            const { type, description } = error;
-            return eventEmitter.emit(type, description);
-        } 
+            return emitError(eventEmitter, error);
+        }
     }
 
-    private async validateParams(user: User){    
+    private async validateUserInputParameters(user: User): Promise<void>{    
         try {
             const { email, password } = user;
             validator(email, 'email', { minSize: 10, maxSize: 100 }).validate();
@@ -29,7 +38,7 @@ class AuthService{
         }
     }
 
-    private async getUserByEmail(user: User){
+    private async verifyIfUserExistAndReturnUserInformations(user: User): Promise<User>{
         const { email } = user;
 
         const existUser = await UserRepository.findOne({
@@ -42,14 +51,15 @@ class AuthService{
         return existUser;
     }
 
-    private async verifyPassword(encryptedPassword: string, passwordInput: string){
-        const correctPassword = compare(encryptedPassword, passwordInput);
+    private async compareUserInputPasswordWithEncryptPassword(params: any): Promise<void>{
+        const { userInputPassword, userEncryptPassword } = params;
+        const correctPassword = compare(userEncryptPassword, userInputPassword);
         if (!correctPassword) throw { type: 'validation-error', description: 'Invalid password' };
     }
 
-    private async generateJWTToken(id: number){
+    private async generateAndReturnJWTToken(userId: number): Promise<string>{
         try {
-            const token = generateToken(id);
+            const token = generateToken(userId);
             return token;
         } catch (error) {
             throw { type: 'error', description: 'Error generating token' };

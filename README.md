@@ -95,6 +95,12 @@ npm run model:create -- --name=UserRules --attributes=userId:number,ruleId:numbe
 ### documentation
 
 ### routes
+POST    /authenticate   public
+
+POST    /users          public
+GET     /users          user
+POST    /users          user
+DELETE  /users          admin
 
 ### controllers
 

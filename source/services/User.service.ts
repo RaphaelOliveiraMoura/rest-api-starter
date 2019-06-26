@@ -1,32 +1,39 @@
 import { EventEmitter } from "events";
-import { validator } from '../utils/validator'
-import { UserRepository, User } from '../models/User'
+import { validator } from '../utils/validator';
+import { UserRepository, User } from '../models/User';
+import { emitSuccess, emitError } from "../utils/emitterHelper";
 
 class UserService {
 
     async createUser(eventEmitter: EventEmitter, user: User): Promise<boolean> {
         try {
-            await this.verifyParams(user);
+            await this.validateUserInputParameters(user);
             await this.verifyIfUserAlreadyExists(user);
-            const createdUser = await this.saveUser(user);
-            return eventEmitter.emit('success', createdUser);
-        } catch (error) {
-            const { type, description } = error;
-            return eventEmitter.emit(type, description);
+            const createdUser = await this.storageUserInDatabase(user);
+            return emitSuccess(eventEmitter, createdUser);
+        } catch (error) { 
+            return emitError(eventEmitter, error);
         }
     }
 
     async listUsers(eventEmitter: EventEmitter): Promise<boolean> {
         try {
-            const users = await this.getAllUsers();
-            return eventEmitter.emit('success', users);
+            const users = await this.getAllUsersFromDatabase();
+            return emitSuccess(eventEmitter, users);
         } catch (error) {
-            const { type, description } = error;
-            return eventEmitter.emit(type, description);
+            return emitError(eventEmitter, error);
         }
     }
 
-    private async verifyParams(userParams: User){
+    async updateUser(eventEmitter: EventEmitter, userId: number, newUserInfo: User ): Promise<boolean> {
+        return false;
+    }
+
+    async deleteUser(eventEmitter: EventEmitter, userId: number): Promise<boolean> {
+        return false;
+    }
+
+    private async validateUserInputParameters(userParams: User){
         const { name, email, password } = userParams;
         try {
             validator(name, 'name', { minSize: 2, maxSize: 25, hasNumbers: false }).validate();
@@ -51,7 +58,7 @@ class UserService {
         }
     }
 
-    private async saveUser(user: User): Promise<User>{
+    private async storageUserInDatabase(user: User): Promise<User>{
         try {
             const createdUser:User = await UserRepository.create(user);
             createdUser.password = undefined;
@@ -61,7 +68,7 @@ class UserService {
         }
     }
 
-    private async getAllUsers(){
+    private async getAllUsersFromDatabase(){
         const users = await UserRepository.findAll().catch(()=>{
             throw { type: 'error', description: 'Error fetching users' };
         });

@@ -41,7 +41,7 @@ it('should return a list of users and 200 status', async () => {
         'password': user.password
     });
 
-    const response = await userRequester.list(body.token);
+    const response = await userRequester.list({ token: body.token });
     expect(response.status).toEqual(200);
     expect(response.text).toContain([]);
 });

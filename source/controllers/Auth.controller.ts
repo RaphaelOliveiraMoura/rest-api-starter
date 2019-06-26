@@ -12,7 +12,10 @@ class AuthController {
 
      /**
      * @typedef UserAuthenticationResponse
-     * @property {integer} token.required - Represents the response of a success authentication
+     * @property {integer} token.required
+     * @property {integer} id.required
+     * @property {string} name.required
+     * @property {string} email.required - Represents the response of a success authentication
      */
 
     /**
@@ -31,8 +34,8 @@ class AuthController {
         const { email, password } = request.body;
         const eventEmitter = new EventEmitter();
         
-        eventEmitter.on('success', (token: string) => {
-            return response.status(200).json({ token: token });
+        eventEmitter.on('success', (userInformations: string) => {
+            return response.status(200).json(userInformations);
         }).on('invalid-params', (error:string) => {
             return response.status(422).json({ error: error });
         }).on('validation-error', (error:string) => {

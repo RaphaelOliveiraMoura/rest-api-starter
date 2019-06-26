@@ -32,13 +32,13 @@ export = {
                 type: DataTypes.INTEGER,
             },
 
-            createdAt: {
+            created_at: {
                 allowNull: false,
                 type: DataTypes.DATE,
                 defaultValue: new Date()
             },
 
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: DataTypes.DATE,
                 defaultValue: new Date()
