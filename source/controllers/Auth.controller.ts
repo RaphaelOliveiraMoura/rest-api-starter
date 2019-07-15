@@ -34,15 +34,18 @@ class AuthController {
         const { email, password } = request.body;
         const eventEmitter = new EventEmitter();
         
-        eventEmitter.on('success', (userInformations: string) => {
-            return response.status(200).json(userInformations);
-        }).on('invalid-params', (error:string) => {
-            return response.status(422).json({ error: error });
-        }).on('validation-error', (error:string) => {
-            return response.status(401).json({ error: error });
-        }).on('error', (error: string) => {
-            return response.status(500).json({ error: error });
-        });
+        eventEmitter.on('success', userInformations => 
+            response.status(200).json(userInformations)
+
+        ).on('invalid-params', (error:string) => 
+            response.status(422).json({ error: error })
+
+        ).on('validation-error', (error:string) => 
+            response.status(401).json({ error: error })
+            
+        ).on('error', (error: string) => 
+            response.status(500).json({ error: error })
+        );
 
         AuthService.authenticate(eventEmitter, {
             email,
