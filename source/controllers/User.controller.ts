@@ -15,11 +15,12 @@ class UserController {
     public async list(request: Request, response: Response): Promise<any> {
         const eventEmitter = new EventEmitter();
 
-        eventEmitter.on('success', (users: User[]) => {
-            return response.status(200).json(users);
-        }).on('error', (error: string) => {
-            return response.status(500).json({ error: error });
-        });
+        eventEmitter.on('success', (users: Array<User>) => 
+            response.status(200).json(users)
+
+        ).on('error', (error: string) => 
+            response.status(500).json({ error: error })
+        );
 
         await UserService.listUsers(eventEmitter);
     }
@@ -51,16 +52,19 @@ class UserController {
      * @returns {Error} 500 - Internal Server Error
      */
     public async create(request: Request, response: Response): Promise<any> {
-        const { name, email, password } = request.body;
         
+        const { name, email, password } = request.body;
         const eventEmitter = new EventEmitter();
-        eventEmitter.on('success', (user: User) => {
-            return response.status(200).json(user);
-        }).on('invalid-params', (error: string) => {
-            return response.status(400).json({ error: error });
-        }).on('error', (error: string) => {
-            return response.status(500).json({ error: error });
-        });
+
+        eventEmitter.on('success', (user: User) => 
+            response.status(200).json(user)
+
+        ).on('invalid-params', (error: string) => 
+            response.status(400).json({ error: error })
+
+        ).on('error', (error: string) => 
+            response.status(500).json({ error: error })
+        );
 
         await UserService.createUser(eventEmitter, {
             name,

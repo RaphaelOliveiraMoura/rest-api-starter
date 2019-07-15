@@ -8,10 +8,11 @@ export default (request: Request, response: Response, next: NextFunction) => {
     if (!token)
         return response.status(401).json({ error: 'Should provide the JWT token' });
 
-    try {
-        if (validate(token)) return next();
-    } catch (error) {
+    const tokenIsValid = validate(token);
+
+    if(!tokenIsValid)
         return response.status(401).json({ error: 'Error with JWT authentication' });
-    }
+
+    return next();
 
 }
