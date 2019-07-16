@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AuthService from '../services/Auth.service';
+import { AuthService } from '../services/';
 import { EventEmitter } from "events";
 
 class AuthController {
@@ -10,13 +10,13 @@ class AuthController {
      * @property {string} password.required - Represents the params to authenticate a user
      */
 
-     /**
-     * @typedef UserAuthenticationResponse
-     * @property {integer} token.required
-     * @property {integer} id.required
-     * @property {string} name.required
-     * @property {string} email.required - Represents the response of a success authentication
-     */
+    /**
+    * @typedef UserAuthenticationResponse
+    * @property {integer} token.required
+    * @property {integer} id.required
+    * @property {string} name.required
+    * @property {string} email.required - Represents the response of a success authentication
+    */
 
     /**
      * @route POST /authenticate
@@ -30,20 +30,20 @@ class AuthController {
      * @returns {Error}  500 - Internal Server Error
      */
     public async authenticate(request: Request, response: Response): Promise<any> {
-        
+
         const { email, password } = request.body;
         const eventEmitter = new EventEmitter();
-        
-        eventEmitter.on('success', userInformations => 
+
+        eventEmitter.on('success', userInformations =>
             response.status(200).json(userInformations)
 
-        ).on('invalid-params', (error:string) => 
+        ).on('invalid-params', (error: string) =>
             response.status(422).json({ error: error })
 
-        ).on('validation-error', (error:string) => 
+        ).on('validation-error', (error: string) =>
             response.status(401).json({ error: error })
-            
-        ).on('error', (error: string) => 
+
+        ).on('error', (error: string) =>
             response.status(500).json({ error: error })
         );
 
