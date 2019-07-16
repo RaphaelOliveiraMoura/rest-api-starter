@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserService from "../services/User.service";
+import { UserService } from "../services";
 import { EventEmitter } from "events";
 import { User } from "../models/User";
 
@@ -15,10 +15,10 @@ class UserController {
     public async list(request: Request, response: Response): Promise<any> {
         const eventEmitter = new EventEmitter();
 
-        eventEmitter.on('success', (users: Array<User>) => 
+        eventEmitter.on('success', (users: Array<User>) =>
             response.status(200).json(users)
 
-        ).on('error', (error: string) => 
+        ).on('error', (error: string) =>
             response.status(500).json({ error: error })
         );
 
@@ -52,17 +52,17 @@ class UserController {
      * @returns {Error} 500 - Internal Server Error
      */
     public async create(request: Request, response: Response): Promise<any> {
-        
+
         const { name, email, password } = request.body;
         const eventEmitter = new EventEmitter();
 
-        eventEmitter.on('success', (user: User) => 
+        eventEmitter.on('success', (user: User) =>
             response.status(200).json(user)
 
-        ).on('invalid-params', (error: string) => 
+        ).on('invalid-params', (error: string) =>
             response.status(400).json({ error: error })
 
-        ).on('error', (error: string) => 
+        ).on('error', (error: string) =>
             response.status(500).json({ error: error })
         );
 
