@@ -56,6 +56,6 @@
     "express-swagger-generator": "^1.1.15",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.8.12"
+    "sequelize": "^5.15.1"
   }
 }
